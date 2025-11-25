@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Bienvenido</title>
+    <title>Hell's Kitchen — Bienvenido</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Old English style font -->
@@ -12,11 +12,11 @@
 
     <style>
         :root {
-            --overlay: rgba(0, 0, 0, 0.55);
-            --card-bg: rgba(15, 23, 42, 0.88);
-            --card-border: rgba(255,255,255,0.25);
+            --overlay: rgba(0, 0, 0, 0.25);
+            --card-bg: rgba(15, 23, 42, 0.35);
+            --card-border: rgba(255,255,255,0.2);
             --text: #e5e7eb;
-            --muted: #9ca3af;
+            --muted: #cbd5e1;
             --accent: #22c55e;
         }
 
@@ -26,17 +26,17 @@
 
         body {
             margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family: system-ui, -apple-system, BlinkMcSystemFont, "Segoe UI", sans-serif;
             min-height: 100vh;
             color: var(--text);
         }
 
-            /* Background image */
+            /* Hell's Kitchen background */
             body::before {
                 content: "";
                 position: fixed;
                 inset: 0;
-                background: url("backgrounds/GarfieldHacker420.png") center center / cover no-repeat fixed;
+                background: url("../backgrounds/2hot.png") center center / cover no-repeat fixed;
                 z-index: -2;
             }
 
@@ -81,7 +81,25 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
-        /* Cryptid navigation bar */
+        .subtitle {
+            margin-top: 0.2rem;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+            .back-link:hover {
+                text-decoration: underline;
+            }
+
+        /* Cryptid navigation bar (same as homepage) */
         .nav-menu {
             display: flex;
             justify-content: center;
@@ -102,7 +120,6 @@
             width: 90px;
             padding-top: 60px;
             text-align: center;
-            text-decoration: none;
             color: var(--text);
             font-size: 0.8rem;
         }
@@ -128,32 +145,32 @@
             will-change: transform;
         }
 
-        /* Individual cryptid sprites */
+        /* Sprite images */
         .sprite-alien {
-            background-image: url("sprites/Alien.png");
+            background-image: url("../sprites/Alien.png");
         }
 
         .sprite-bigfoot {
-            background-image: url("sprites/Bigfoot.png");
+            background-image: url("../sprites/Bigfoot.png");
         }
 
         .sprite-mothman {
-            background-image: url("sprites/Mothman.png");
+            background-image: url("../sprites/Mothman.png");
         }
 
         .sprite-chupacabra {
-            background-image: url("sprites/Chupacabra.png");
+            background-image: url("../sprites/Chupacabra.png");
         }
 
         .sprite-devil {
-            background-image: url("sprites/Devil.png");
+            background-image: url("../sprites/Devil.png");
         }
 
         .sprite-cthulu {
-            background-image: url("sprites/Cthulu.png");
+            background-image: url("../sprites/Cthulu.png");
         }
 
-        /* UFO + tractor beam hover effect */
+        /* UFO beam hover effect */
         .ufo {
             position: absolute;
             top: 0;
@@ -161,7 +178,7 @@
             width: 52px;
             height: 52px;
             transform: translateX(-50%) translateY(10px) scale(0.85);
-            background-image: url("sprites/UFO.png");
+            background-image: url("../sprites/UFO.png");
             background-size: contain;
             background-repeat: no-repeat;
             opacity: 0;
@@ -180,23 +197,23 @@
             background: radial-gradient(circle at top, rgba(248,250,252,0.9) 0, rgba(224,242,254,0.7) 20%, rgba(96,165,250,0.25) 50%, transparent 75%);
             clip-path: polygon(50% 0, 0 100%, 100% 100%);
             opacity: 0;
-            pointer-events: none;
             transition: opacity 0.2s ease-out;
             mix-blend-mode: screen;
         }
 
-        .menu-item:hover .ufo,
-        .menu-item:focus-visible .ufo {
+        .menu-item:hover .ufo {
             opacity: 1;
             transform: translateX(-50%) translateY(0) scale(1);
         }
 
-        .menu-item:hover .beam,
-        .menu-item:focus-visible .beam {
+        .menu-item:hover .beam {
             opacity: 1;
         }
 
-        /* Bounce animation for sprites under the beam */
+        .menu-item:hover .sprite {
+            animation: sprite-bob 0.6s ease-in-out infinite alternate;
+        }
+
         @keyframes sprite-bob {
             0% {
                 transform: translateY(-2px) scale(1.03);
@@ -207,77 +224,129 @@
             }
         }
 
-        .menu-item:hover .sprite,
-        .menu-item:focus-visible .sprite {
-            animation: sprite-bob 0.6s ease-in-out infinite alternate;
-        }
-
-        /* Main content */
+        /* Main layout */
         main {
-            max-width: 900px;
+            max-width: 960px;
             margin: 1.75rem auto 0;
             padding: 0 1.25rem 90vh;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 1.25rem;
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             box-shadow: 0 10px 40px rgba(0,0,0,0.7);
             backdrop-filter: blur(10px);
-            text-align: left;
         }
 
-        h2 {
-            margin: 0 0 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+        /* GarfChef – TOC section */
+        .recipes-toc {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .toc-header {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .garfchef-icon {
+            width: 64px;
+            height: 64px;
+            background-image: url("../sprites/GarfChef.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            image-rendering: pixelated;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.9));
+        }
+
+        .toc-text h3 {
+            margin: 0;
+            font-family: "UnifrakturCook", serif;
+            font-size: 1.4rem;
+        }
+
+        .toc-text p {
+            margin: 0.1rem 0 0;
+            font-size: 0.85rem;
             color: var(--muted);
-            font-size: 0.9rem;
         }
 
-        p {
-            margin: 0.35rem 0;
-            line-height: 1.6;
+        .recipe-links {
+            list-style: none;
+            padding: 0;
+            margin: 0.25rem 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
         }
 
-        .muted {
-            color: var(--muted);
-            font-size: 0.9rem;
+        .recipe-link-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .garfchef-small {
+            width: 40px;
+            height: 40px;
+            background-image: url("../sprites/GarfChef.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            image-rendering: pixelated;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.85));
+            transform-origin: left center;
+            transform: translateX(0);
+        }
+
+        .recipe-link-row a {
+            color: #e5e7eb;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+            .recipe-link-row a:hover,
+            .recipe-link-row:focus-visible {
+                text-decoration: underline;
+            }
+
+        @keyframes garf-stab {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+
+            40% {
+                transform: translateX(10px) rotate(-8deg);
+            }
+
+            80% {
+                transform: translateX(-3px) rotate(4deg);
+            }
+
+            100% {
+                transform: translateX(0) rotate(0deg);
+            }
+        }
+
+        .recipe-link-row:hover .garfchef-small,
+        .recipe-link-row:focus-within .garfchef-small {
+            animation: garf-stab 0.4s ease-out infinite;
         }
 
         footer {
-            margin-top: 2rem;
+            margin-top: 1rem;
             font-size: 0.75rem;
             color: var(--muted);
             text-align: center;
-        }
-
-        iframe {
-            border-radius: 12px;
-            width: 100%;
-            max-width: 100%;
-        }
-
-        @media (max-width: 640px) {
-            .menu-item {
-                width: 80px;
-                padding-top: 56px;
-            }
-
-            .sprite {
-                width: 50px;
-                height: 50px;
-            }
-
-            .ufo {
-                width: 46px;
-                height: 46px;
-            }
         }
     </style>
 </head>
@@ -286,11 +355,14 @@
 
     <header>
         <div class="top-bar">
+            <a href="../index.html" class="back-link">← Back to Bienvenido</a>
+
             <div class="banner">
                 <h1>What is up Foo!?</h1>
+                <div class="subtitle">Hell's Kitchen · Recipes that survived the chaos.</div>
             </div>
 
-            <!-- UFO cryptid navigation bar (decorative for now) -->
+            <!-- SAME NAVBAR AS HOMEPAGE -->
             <nav class="nav-menu" aria-label="Main menu">
                 <div class="menu-item">
                     <div class="ufo"></div>
@@ -298,35 +370,30 @@
                     <div class="sprite sprite-alien"></div>
                     <span class="menu-label">Make Contact</span>
                 </div>
-
                 <div class="menu-item">
                     <div class="ufo"></div>
                     <div class="beam"></div>
                     <div class="sprite sprite-bigfoot"></div>
                     <span class="menu-label">See the Sights</span>
                 </div>
-
                 <div class="menu-item">
                     <div class="ufo"></div>
                     <div class="beam"></div>
                     <div class="sprite sprite-mothman"></div>
                     <span class="menu-label">News</span>
                 </div>
-
                 <div class="menu-item">
                     <div class="ufo"></div>
                     <div class="beam"></div>
                     <div class="sprite sprite-chupacabra"></div>
                     <span class="menu-label">Otras Cosas</span>
                 </div>
-
                 <div class="menu-item">
                     <div class="ufo"></div>
                     <div class="beam"></div>
                     <div class="sprite sprite-devil"></div>
-                    <span class="menu-label">Hell's Kitchen'</span>
+                    <span class="menu-label">Hell's Kitchen</span>
                 </div>
-
                 <div class="menu-item">
                     <div class="ufo"></div>
                     <div class="beam"></div>
@@ -338,21 +405,37 @@
     </header>
 
     <main>
-        <section class="card">
-            <h2>Now Playing</h2>
-            <p class="muted">Spotify embed loads below. Autoplay behavior depends on your browser’s settings.</p>
 
-            <iframe src="https://open.spotify.com/embed/playlist/5T2sAQAHzjN5DWMQH73ZxX?utm_source=generator&theme=0"
-                    height="352"
-                    frameborder="0"
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy">
-            </iframe>
+        <!-- TABLE OF CONTENTS (GarfChef) -->
+        <section class="card recipes-toc">
+            <div class="toc-header">
+                <div class="garfchef-icon"></div>
+                <div class="toc-text">
+                    <h3>Recipes</h3>
+                    <p>Click a recipe below. GarfChef will aggressively approve your choice.</p>
+                </div>
+            </div>
+
+            <ul class="recipe-links">
+                <li class="recipe-link-row">
+                    <div class="garfchef-small"></div>
+                    <a href="#vegan-green-bean-casserole">Vegan Green Bean Casserole</a>
+                </li>
+
+                <!-- Add more recipe links here -->
+            </ul>
         </section>
+
+        <!-- Recipe cards go below -->
+        <section class="card">
+            <h2>Recipe Cards</h2>
+            <p class="muted">This is where full recipe cards will go. Paste your recipe card HTML below.</p>
+        </section>
+
     </main>
 
     <footer>
-        © <span id="year"></span> Bienvenido — No trackers. Just chaos.
+        © <span id="year"></span> Hell's Kitchen — No trackers. Just vibes and carbs.
     </footer>
 
     <script>
