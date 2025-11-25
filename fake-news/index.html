@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Hell's Kitchen — Bienvenido</title>
+    <title>Fake News Network — Bienvenido</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Old English style font -->
@@ -26,17 +26,18 @@
 
         body {
             margin: 0;
-            font-family: system-ui, -apple-system, BlinkMcSystemFont, "Segoe UI", sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             min-height: 100vh;
             color: var(--text);
+            cursor: url("../sprites/Ojitos.png") 16 16, auto; /* custom eyes cursor */
         }
 
-            /* Hell's Kitchen background */
+            /* Background image */
             body::before {
                 content: "";
                 position: fixed;
                 inset: 0;
-                background: url("../backgrounds/2hot.png") center center / cover no-repeat fixed;
+                background: url("../backgrounds/BroGarf.png") center center / cover no-repeat fixed;
                 z-index: -2;
             }
 
@@ -48,12 +49,11 @@
                 z-index: -1;
             }
 
-        /* Header: banner + nav */
+        /* Header */
         header {
-            position: static;
-            top: 0;
-            z-index: 20;
+            /* not sticky so you can scroll past it */
             backdrop-filter: blur(1px);
+            z-index: 20;
         }
 
         .top-bar {
@@ -99,7 +99,7 @@
                 text-decoration: underline;
             }
 
-        /* Cryptid navigation bar (same as homepage) */
+        /* Cryptid navigation bar (same vibe as home) */
         .nav-menu {
             display: flex;
             justify-content: center;
@@ -141,11 +141,9 @@
             image-rendering: pixelated;
             filter: drop-shadow(0 2px 6px rgba(0,0,0,0.9));
             transform: translateY(0) scale(1);
-            transition: transform 0.15s ease-out;
             will-change: transform;
         }
 
-        /* Sprite images */
         .sprite-alien {
             background-image: url("../sprites/Alien.png");
         }
@@ -170,7 +168,6 @@
             background-image: url("../sprites/Cthulu.png");
         }
 
-        /* UFO beam hover effect */
         .ufo {
             position: absolute;
             top: 0;
@@ -197,21 +194,8 @@
             background: radial-gradient(circle at top, rgba(248,250,252,0.9) 0, rgba(224,242,254,0.7) 20%, rgba(96,165,250,0.25) 50%, transparent 75%);
             clip-path: polygon(50% 0, 0 100%, 100% 100%);
             opacity: 0;
-            transition: opacity 0.2s ease-out;
             mix-blend-mode: screen;
-        }
-
-        .menu-item:hover .ufo {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0) scale(1);
-        }
-
-        .menu-item:hover .beam {
-            opacity: 1;
-        }
-
-        .menu-item:hover .sprite {
-            animation: sprite-bob 0.6s ease-in-out infinite alternate;
+            transition: opacity 0.2s ease-out;
         }
 
         @keyframes sprite-bob {
@@ -224,129 +208,148 @@
             }
         }
 
+        .menu-item:hover .ufo,
+        .menu-item:focus-visible .ufo {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) scale(1);
+        }
+
+        .menu-item:hover .beam,
+        .menu-item:focus-visible .beam {
+            opacity: 1;
+        }
+
+        .menu-item:hover .sprite,
+        .menu-item:focus-visible .sprite {
+            animation: sprite-bob 0.6s ease-in-out infinite alternate;
+        }
+
         /* Main layout */
         main {
-            max-width: 960px;
+            max-width: 1152px;
             margin: 1.75rem auto 0;
-            padding: 0 1.25rem 90vh;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            padding: 0 1.25rem 5vh; /* extra scroll room for wallpaper */
+            position: relative;
         }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 1.25rem;
-            padding: 1.25rem 1.5rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
+        /* TV screen overlay for feed */
+        .tv-wrapper {
+            position: relative;
+            width: 100%;
+            height: calc(768px * 0.75); /* approximate visible area; adjust as desired */
+            max-width: 1152px;
+            margin: 0 auto;
         }
 
-        /* GarfChef – TOC section */
-        .recipes-toc {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
+        .tv-screen {
+            position: absolute;
+            /* These values are tuned for the provided image (1152x768).
+         Adjust top/left/width/height if needed after you eyeball it in the browser. */
+            top: 19%;
+            left: 18%;
+            width: 36%;
+            height: 48%;
+            background: radial-gradient(circle at 10% 0%, #111827 0, #020617 40%, #020617 100%);
+            border-radius: 10px;
+            box-shadow: inset 0 0 18px rgba(0,0,0,0.9);
+            padding: 0.5rem 0.7rem;
+            overflow-y: auto;
+            color: #e5e7eb;
+            font-size: 0.78rem;
+            line-height: 1.4;
+            scrollbar-width: thin;
+            scrollbar-color: #22c55e #020617;
         }
 
-        .toc-header {
-            display: flex;
-            align-items: center;
-            gap: 0.9rem;
-            margin-bottom: 0.25rem;
-        }
+            .tv-screen::-webkit-scrollbar {
+                width: 6px;
+            }
 
-        .garfchef-icon {
-            width: 64px;
-            height: 64px;
-            background-image: url("../sprites/GarfChef.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            image-rendering: pixelated;
-            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.9));
-        }
+            .tv-screen::-webkit-scrollbar-track {
+                background: #020617;
+            }
 
-        .toc-text h3 {
-            margin: 0;
+            .tv-screen::-webkit-scrollbar-thumb {
+                background-color: #22c55e;
+                border-radius: 999px;
+            }
+
+        .feed-header {
             font-family: "UnifrakturCook", serif;
-            font-size: 1.4rem;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            text-align: center;
+            letter-spacing: 0.05em;
         }
 
-        .toc-text p {
-            margin: 0.1rem 0 0;
-            font-size: 0.85rem;
+        .feed-meta {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .feed-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feed-item + .feed-item {
+            margin-top: 0.4rem;
+            padding-top: 0.35rem;
+            border-top: 1px dashed rgba(148,163,184,0.4);
+        }
+
+        .feed-title {
+            font-weight: 600;
+            margin: 0;
+        }
+
+            .feed-title a {
+                color: #e5e7eb;
+                text-decoration: none;
+            }
+
+                .feed-title a:hover,
+                .feed-title a:focus-visible {
+                    text-decoration: underline;
+                }
+
+        .feed-source {
+            font-size: 0.7rem;
             color: var(--muted);
         }
 
-        .recipe-links {
-            list-style: none;
-            padding: 0;
-            margin: 0.25rem 0 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-        }
-
-        .recipe-link-row {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .garfchef-small {
-            width: 40px;
-            height: 40px;
-            background-image: url("../sprites/GarfChef.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            image-rendering: pixelated;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.85));
-            transform-origin: left center;
-            transform: translateX(0);
-        }
-
-        .recipe-link-row a {
-            color: #e5e7eb;
-            text-decoration: none;
-            font-size: 0.95rem;
-        }
-
-            .recipe-link-row a:hover,
-            .recipe-link-row:focus-visible {
-                text-decoration: underline;
-            }
-
-        @keyframes garf-stab {
-            0% {
-                transform: translateX(0) rotate(0deg);
-            }
-
-            40% {
-                transform: translateX(10px) rotate(-8deg);
-            }
-
-            80% {
-                transform: translateX(-3px) rotate(4deg);
-            }
-
-            100% {
-                transform: translateX(0) rotate(0deg);
-            }
-        }
-
-        .recipe-link-row:hover .garfchef-small,
-        .recipe-link-row:focus-within .garfchef-small {
-            animation: garf-stab 0.4s ease-out infinite;
+        .feed-summary {
+            margin: 0.1rem 0 0;
+            font-size: 0.74rem;
+            color: #cbd5e1;
         }
 
         footer {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             font-size: 0.75rem;
             color: var(--muted);
             text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                padding-bottom: 50vh;
+            }
+
+            .tv-wrapper {
+                height: auto;
+                aspect-ratio: 3 / 2; /* approximate */
+            }
+
+            .tv-screen {
+                top: 22%;
+                left: 16%;
+                width: 40%;
+                height: 52%;
+            }
         }
     </style>
 </head>
@@ -359,10 +362,10 @@
 
             <div class="banner">
                 <h1>What is up Foo!?</h1>
-                <div class="subtitle">Hell's Kitchen · Recipes that survived the chaos.</div>
+                <div class="subtitle">Fake News Network · Broadcast live from your brain worms.</div>
             </div>
 
-            <!-- SAME NAVBAR AS HOMEPAGE -->
+            <!-- Nav bar with cryptid sprites -->
             <nav class="nav-menu" aria-label="Main menu">
 
   <a class="menu-item" href="/Talk2Me/">
@@ -413,41 +416,87 @@
     </header>
 
     <main>
-
-        <!-- TABLE OF CONTENTS (GarfChef) -->
-        <section class="card recipes-toc">
-            <div class="toc-header">
-                <div class="garfchef-icon"></div>
-                <div class="toc-text">
-                    <h3>Recipes</h3>
-                    <p>Click a recipe below. GarfChef will aggressively approve your choice.</p>
-                </div>
+        <div class="tv-wrapper">
+            <!-- This sits over the TV's empty space -->
+            <div class="tv-screen" id="tvFeed">
+                <div class="feed-header">Fake News Ticker</div>
+                <div class="feed-meta" id="feedMeta">Loading headlines…</div>
+                <ul class="feed-list" id="feedList">
+                    <!-- JS will populate items here -->
+                </ul>
             </div>
-
-            <ul class="recipe-links">
-                <li class="recipe-link-row">
-                    <div class="garfchef-small"></div>
-                    <a href="#vegan-green-bean-casserole">Vegan Green Bean Casserole</a>
-                </li>
-
-                <!-- Add more recipe links here -->
-            </ul>
-        </section>
-
-        <!-- Recipe cards go below -->
-        <section class="card">
-            <h2>Recipe Cards</h2>
-            <p class="muted">This is where full recipe cards will go. Paste your recipe card HTML below.</p>
-        </section>
-
+        </div>
     </main>
 
     <footer>
-        © <span id="year"></span> Hell's Kitchen — No trackers. Just vibes and carbs.
+        © <span id="year"></span> Fake News Network — All opinions are hallucinations.
     </footer>
 
     <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // --- SIMPLE PLACEHOLDER FEED DATA ---
+    // For now this uses local static items so it works on GitHub Pages with no backend.
+    // Later we can wire this up to a privacy-respecting RSS->JSON proxy you control.
+    const sampleItems = [
+      {
+        source: "Totally Real News",
+        title: "Local Cat Declares 4AM As International Zoomies Hour",
+        link: "#",
+        summary: "Experts warn productivity may never recover.",
+        time: "Just now"
+      },
+      {
+        source: "Void Gazette",
+        title: "Scientists Confirm: Reading Comments Lowers IQ By 12 Points",
+        link: "#",
+        summary: "Officials recommend touching grass at least twice daily.",
+        time: "10 min ago"
+      },
+      {
+        source: "Orbital Onion",
+        title: "Area Man Starts Personal Website, Immediately More Interesting Than The News",
+        link: "#",
+        summary: "Analysts say vibes expected to rise 300% over Q4.",
+        time: "Today"
+      }
+    ];
+
+    function renderFeed(items) {
+      const list = document.getElementById("feedList");
+      const meta = document.getElementById("feedMeta");
+
+      list.innerHTML = "";
+      if (!items.length) {
+        meta.textContent = "No headlines available. The Ministry of Truth is probably busy.";
+        return;
+      }
+
+      meta.textContent = `Showing ${items.length} handcrafted headlines`;
+
+      for (const item of items) {
+        const li = document.createElement("li");
+        li.className = "feed-item";
+        li.innerHTML = `
+          <p class="feed-title">
+            ${item.link && item.link !== "#"
+              ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a>`
+              : item.title}
+          </p>
+          <div class="feed-source">${item.source} · <span>${item.time}</span></div>
+          ${item.summary ? `<p class="feed-summary">${item.summary}</p>` : ""}
+        `;
+        list.appendChild(li);
+      }
+    }
+
+    renderFeed(sampleItems);
+
+    // NOTE: When you're ready for real RSS:
+    // - We'll set up a tiny proxy (on a serverless function or tiny VPS)
+    //   that fetches RSS → returns minimal JSON.
+    // - Then swap renderFeed(sampleItems) with a fetch() to your proxy.
+    // This avoids sketchy public RSS-to-JSON services and keeps things privacy-friendly.
     </script>
 
 </body>
