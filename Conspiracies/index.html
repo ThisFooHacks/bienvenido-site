@@ -3,378 +3,572 @@
 <head>
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
     <meta charset="utf-8">
-    <title>Howdy!</title>
+    <title>Conspiracies</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        /* === Self-hosted BLACKLETTER TITLE FONT === */
+/* ============================
+   GLOWING GREEN CONSPIRACY CARDS
+   ============================ */
+.con-card {
+    background: rgba(10, 10, 13, 0.82); /* darker smoky black */
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    border-radius: 0.75rem;
+    padding: 0.9rem 1rem;
+    box-shadow:
+        0 0 10px rgba(34, 197, 94, 0.20),
+        0 0 20px rgba(34, 197, 94, 0.08);
+    backdrop-filter: blur(6px);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s ease-out, box-shadow 0.25s ease-out;
+}
 
-        @font-face {
-            font-family: 'Chomsky';
-  src: url('../fonts/Chomsky.woff2') format('woff2');
-            font-weight: normal;
-            font-style: normal;
-        }
+.con-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 0 14px rgba(34, 197, 94, 0.55),
+        0 0 40px rgba(34, 197, 94, 0.25),
+        0 0 60px rgba(34, 197, 94, 0.20);
+}
 
-        @font-face {
-            font-family: 'Junicode';
-            src: url('../fonts/Junicode-Regular.ttf') format('truetype');
-            font-weight: 400;
-            font-style: normal;
-        }
+/* Subtle mist */
+.con-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at top left,
+        rgba(34, 197, 94, 0.22),
+        transparent 70%
+    );
+    opacity: 0.5;
+    pointer-events: none;
+}
 
-        @font-face {
-            font-family: 'Junicode';
-            src: url('../fonts/Junicode-Bold.ttf') format('truetype');
-            font-weight: 700;
-            font-style: normal;
-        }
-        :root {
-            --overlay: rgba(0, 0, 0, 0.25);
-            --card-bg: rgba(15, 23, 42, 0.35);
-            --card-border: rgba(255,255,255,0.2);
-            --text: #e5e7eb;
-            --muted: #cbd5e1;
-            --accent: #22c55e;
-        }
+.con-title {
+    color: #d1fae5;
+    font-weight: 650;
+    font-size: 1rem;
+    text-decoration: none;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+.con-meta {
+    margin-top: 0.3rem;
+    font-size: 0.8rem;
+    color: #6ee7b7;
+    opacity: 0.85;
+}
 
-        body {
-            margin: 0;
-            font-family: Junicode, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            min-height: 100vh;
-            color: var(--text);
-        }
+/* Shimmer pulse */
+.con-card:hover::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(134, 239, 172, 0.18),
+        transparent
+    );
+    animation: green-sweep 0.9s ease-out;
+}
 
-            /* Shared background for placeholder pages */
-            body::before {
-                content: "";
-                position: fixed;
-                inset: 0;
-                background: url("../backgrounds/Conspiracies.png") center center / cover no-repeat fixed;
-                z-index: -2;
-            }
+@keyframes green-sweep {
+    0% { left: -150%; }
+    100% { left: 150%; }
+}
 
-            body::after {
-                content: "";
-                position: fixed;
-                inset: 0;
-                background: var(--overlay);
-                z-index: -1;
-            }
+/* ============================
+   SELF-HOSTED FONTS
+   ============================ */
+@font-face {
+    font-family: 'Chomsky';
+    src: url('../fonts/Chomsky.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 
-        /* Header */
-        header {
-            backdrop-filter: blur(1px); /* light blur, not sticky */
-            z-index: 20;
-        }
+@font-face {
+    font-family: 'Junicode';
+    src: url('../fonts/Junicode-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
 
-        .top-bar {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0.75rem 1.25rem 0.5rem;
-        }
+@font-face {
+    font-family: 'Junicode';
+    src: url('../fonts/Junicode-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
 
-        .banner {
-            margin: 0 auto;
-            padding: 0.75rem 1.5rem;
-            border-radius: 1.25rem 1.25rem 0.75rem 0.75rem;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-bottom: none;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-            text-align: center;
-        }
+:root {
+    --overlay: rgba(0, 0, 0, 0.30);
+    --card-bg: rgba(15, 23, 42, 0.35);
+    --card-border: rgba(255,255,255,0.2);
+    --text: #e5e7eb;
+    --muted: #cbd5e1;
+    --accent: #22c55e;
+}
 
-        h1 {
-            margin: 0;
-            font-family: 'Chomsky', serif;
-            font-size: clamp(2.2rem, 5vw, 3.3rem);
-            font-weight: normal;
-            letter-spacing: -1px;
-            color: #fff;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.35);
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .subtitle {
-            margin-top: 0.2rem;
-            font-size: 0.9rem;
-            color: var(--muted);
-        }
+body {
+    margin: 0;
+    font-family: 'Junicode', serif;
+    min-height: 100vh;
+    color: var(--text);
+}
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--muted);
-            text-decoration: none;
-        }
+/* Background */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("../backgrounds/Conspiracies.png") center center / cover no-repeat fixed;
+    z-index: -2;
+}
 
-            .back-link:hover {
-                text-decoration: underline;
-            }
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: var(--overlay);
+    z-index: -1;
+}
 
-        /* Nav menu */
-        .nav-menu {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            padding: 0.65rem 1rem 1rem;
-            margin: 0 auto;
-            max-width: 1000px;
-            background: radial-gradient(circle at top, rgba(15,23,42,0.95), rgba(15,23,42,0.85));
-            border-radius: 0 0 1.25rem 1.25rem;
-            border: 1px solid var(--card-border);
-            border-top: none;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.75);
-        }
+/* Prevent mobile jitter */
+@media (max-width: 768px) {
+    body::before {
+        background-attachment: scroll;
+    }
+}
 
-        .menu-item {
-            position: relative;
-            width: 90px;
-            padding-top: 60px;
-            text-align: center;
-            color: var(--text);
-            font-size: 0.8rem;
-            text-decoration: none;
-        }
+/* Header */
+header {
+    backdrop-filter: blur(1px);
+    z-index: 20;
+}
 
-        .menu-label {
-            margin-top: 0.15rem;
-            display: block;
-            font-family: "Chomsky", serif;
-            font-size: 0.9rem;
-        }
+.top-bar {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0.75rem 1.25rem 0.5rem;
+}
 
-        .sprite {
-            width: 56px;
-            height: 56px;
-            margin: 0 auto 0.2rem;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            image-rendering: pixelated;
-            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.9));
-            transform: translateY(0) scale(1);
-            will-change: transform;
-        }
+.banner {
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1.25rem 1.25rem 0.75rem 0.75rem;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--card-border);
+    border-bottom: none;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+    text-align: center;
+}
 
-        .sprite-alien {
-            background-image: url("../sprites/Alien.png");
-        }
+h1 {
+    margin: 0;
+    font-family: 'Chomsky', serif;
+    font-size: clamp(2.2rem, 5vw, 3.3rem);
+    font-weight: normal;
+    letter-spacing: -1px;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.35);
+}
 
-        .sprite-bigfoot {
-            background-image: url("../sprites/Bigfoot.png");
-        }
+.subtitle {
+    margin-top: 0.2rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
 
-        .sprite-mothman {
-            background-image: url("../sprites/Mothman.png");
-        }
+/* Back link */
+.back-link {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+}
 
-        .sprite-chupacabra {
-            background-image: url("../sprites/Chupacabra.png");
-        }
+.back-link:hover {
+    text-decoration: underline;
+}
 
-        .sprite-devil {
-            background-image: url("../sprites/Devil.png");
-        }
+/* ============================
+   NAV MENU (UFO SPRITES)
+   ============================ */
+.nav-menu {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.65rem 1rem 1rem;
+    margin: 0 auto;
+    max-width: 1000px;
+    background: radial-gradient(circle at top, rgba(15,23,42,0.95), rgba(15,23,42,0.85));
+    border-radius: 0 0 1.25rem 1.25rem;
+    border: 1px solid var(--card-border);
+    border-top: none;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.75);
+}
 
-        .sprite-cthulu {
-            background-image: url("../sprites/Cthulu.png");
-        }
+.menu-item {
+    position: relative;
+    width: 90px;
+    padding-top: 60px;
+    text-align: center;
+    color: var(--text);
+    font-size: 0.8rem;
+    text-decoration: none;
+}
 
-        .ufo {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 52px;
-            height: 52px;
-            transform: translateX(-50%) translateY(10px) scale(0.85);
-            background-image: url("../sprites/UFO.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.9));
-        }
+.menu-label {
+    margin-top: 0.15rem;
+    display: block;
+    font-family: 'Chomsky', serif;
+    font-size: 0.9rem;
+}
 
-        .beam {
-            position: absolute;
-            top: 32px;
-            left: 50%;
-            width: 40px;
-            height: 80px;
-            transform: translateX(-50%);
-            background: radial-gradient(circle at top, rgba(248,250,252,0.9) 0, rgba(224,242,254,0.7) 20%, rgba(96,165,250,0.25) 50%, transparent 75%);
-            clip-path: polygon(50% 0, 0 100%, 100% 100%);
-            opacity: 0;
-            mix-blend-mode: screen;
-            transition: opacity 0.2s ease-out;
-        }
+/* Sprites */
+.sprite {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 0.2rem;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.9));
+}
 
-        @keyframes sprite-bob {
-            0% {
-                transform: translateY(-2px) scale(1.03);
-            }
+.sprite-alien { background-image: url("../sprites/Alien.png"); }
+.sprite-bigfoot { background-image: url("../sprites/Bigfoot.png"); }
+.sprite-mothman { background-image: url("../sprites/Mothman.png"); }
+.sprite-chupacabra { background-image: url("../sprites/Chupacabra.png"); }
+.sprite-devil { background-image: url("../sprites/Devil.png"); }
+.sprite-cthulu { background-image: url("../sprites/Cthulu.png"); }
 
-            100% {
-                transform: translateY(-10px) scale(1.08);
-            }
-        }
+/* UFO hover */
+.ufo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 52px;
+    height: 52px;
+    transform: translateX(-50%) translateY(10px) scale(0.85);
+    background-image: url("../sprites/UFO.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.9));
+}
 
-        .menu-item:hover .ufo,
-        .menu-item:focus-visible .ufo {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0) scale(1);
-        }
+.beam {
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    width: 40px;
+    height: 80px;
+    transform: translateX(-50%);
+    background: radial-gradient(circle at top,
+        rgba(248,250,252,0.9) 0,
+        rgba(224,242,254,0.7) 20%,
+        rgba(96,165,250,0.25) 50%,
+        transparent 75%);
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+    opacity: 0;
+    mix-blend-mode: screen;
+    transition: opacity 0.2s ease-out;
+}
 
-        .menu-item:hover .beam,
-        .menu-item:focus-visible .beam {
-            opacity: 1;
-        }
+@keyframes sprite-bob {
+    0% { transform: translateY(-2px) scale(1.03); }
+    100% { transform: translateY(-10px) scale(1.08); }
+}
 
-        .menu-item:hover .sprite,
-        .menu-item:focus-visible .sprite {
-            animation: sprite-bob 0.6s ease-in-out infinite alternate;
-        }
+.menu-item:hover .ufo { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+.menu-item:hover .beam { opacity: 1; }
+.menu-item:hover .sprite { animation: sprite-bob 0.6s ease-in-out infinite alternate; }
 
-        /* Main content */
-        main {
-            max-width: 900px;
-            margin: 1.75rem auto 0;
-            padding: 0 1.25rem 40vh; /* extra scroll to see wallpaper */
-        }
+/* ============================
+   MAIN
+   ============================ */
+main {
+    max-width: 900px;
+    margin: 1.75rem auto 0;
+    padding: 0 1.25rem 40vh;
+}
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 1.25rem;
-            padding: 1.5rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
-            text-align: left;
-        }
+.card {
+    background: rgba(10, 10, 13, 0.75);
+    border: 1px solid rgba(148,163,184,0.25);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    box-shadow: 0 10}px 40px rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+}
 
-        .page-name {
-            font-family: "Chomsky", serif;
-            font-size: 1.8rem;
-            margin: 0 0 0.5rem;
-        }
+.page-name {
+    font-family: 'Chomsky', serif;
+    font-size: 1.8rem;
+    margin: 0 0 0.5rem;
+}
 
-        .muted {
-            color: var(--muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
+.muted {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
 
-        footer {
-            margin-top: 1.5rem;
-            font-size: 0.75rem;
-            color: var(--muted);
-            text-align: center;
-        }
-
-        @media (max-width: 640px) {
-            .menu-item {
-                width: 80px;
-                padding-top: 56px;
-            }
-
-            .sprite {
-                width: 50px;
-                height: 50px;
-            }
-
-            .ufo {
-                width: 46px;
-                height: 46px;
-            }
-        }
+footer {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+}
     </style>
 </head>
 
 <body>
 
-  <header>
+<header>
     <div class="top-bar">
-      <a href="../index.html" class="back-link">← Back to Bienvenido</a>
+        <a href="/" class="back-link">← Back to Bienvenido</a>
 
-      <div class="banner">
-        <h1>What is up Foo!?</h1>
-        <div class="subtitle"><!-- EDIT ME: subtitle -->Work in progress portal.</div>
-      </div>
+        <div class="banner">
+            <h1>What is up Foo!?</h1>
+            <div class="subtitle">Welcome to the weird side.</div>
+        </div>
 
-      <!-- GLOBAL NAV (same everywhere) -->
-      <nav class="nav-menu" aria-label="Main menu">
+        <nav class="nav-menu" aria-label="Main menu">
 
-        <a class="menu-item" href="/Talk2Me/">
-          <div class="ufo"></div>
-          <div class="beam"></div>
-          <div class="sprite sprite-alien"></div>
-          <span class="menu-label">Make Contact</span>
-        </a>
+            <a class="menu-item" href="/Talk2Me/">
+                <div class="ufo"></div><div class="beam"></div>
+                <div class="sprite sprite-alien"></div>
+                <span class="menu-label">Make Contact</span>
+            </a>
 
-        <a class="menu-item" href="/Conspiracies/">
-          <div class="ufo"></div>
-          <div class="beam"></div>
-          <div class="sprite sprite-bigfoot"></div>
-          <span class="menu-label">Conspiracies</span>
-        </a>
+            <a class="menu-item" href="/Conspiracies/">
+                <div class="ufo"></div><div class="beam"></div>
+                <div class="sprite sprite-bigfoot"></div>
+                <span class="menu-label">Conspiracies</span>
+            </a>
 
-        <a class="menu-item" href="/fake-news/">
-          <div class="ufo"></div>
-          <div class="beam"></div>
-          <div class="sprite sprite-mothman"></div>
-          <span class="menu-label">News</span>
-        </a>
+            <a class="menu-item" href="/fake-news/">
+                <div class="ufo"></div><div class="beam"></div>
+                <div class="sprite sprite-mothman"></div>
+                <span class="menu-label">News</span>
+            </a>
 
-        <a class="menu-item" href="/Revistas/">
-          <div class="ufo"></div>
-          <div class="beam"></div>
-          <div class="sprite sprite-chupacabra"></div>
-          <span class="menu-label">ChupaYCome</span>
-        </a>
+            <a class="menu-item" href="/Revistas/">
+                <div class="ufo"></div><div class="beam"></div>
+                <div class="sprite sprite-chupacabra"></div>
+                <span class="menu-label">ChupaYCome</span>
+            </a>
 
-        <a class="menu-item" href="/hells-kitchen/">
-          <div class="ufo"></div>
-          <div class="beam"></div>
-          <div class="sprite sprite-devil"></div>
-          <span class="menu-label">Hell's Kitchen</span>
-        </a>
+            <a class="menu-item" href="/hells-kitchen/">
+                <div class="ufo"></div><div class="beam"></div>
+                <div class="sprite sprite-devil"></div>
+                <span class="menu-label">Hell's Kitchen</span>
+            </a>
 
-        <a class="menu-item" href="/blog/">
-          <div class="ufo"></div>
-          <div class="beam"></div>
-          <div class="sprite sprite-cthulu"></div>
-          <span class="menu-label">Literary Nightmares</span>
-        </a>
+            <a class="menu-item" href="/blog/">
+                <div class="ufo"></div><div class="beam"></div>
+                <div class="sprite sprite-cthulu"></div>
+                <span class="menu-label">Literary Nightmares</span>
+            </a>
 
-      </nav>
+        </nav>
     </div>
-  </header>
+</header>
 
-  <main>
-    <section class="card">
-      <h2 class="page-name"><!-- EDIT ME: visible page name -->Coming Soon</h2>
-      <p class="muted">
-        This corner of the multiverse isn’t wired up yet.
-        Check back later once the cables are plugged in and the cryptids sign their NDAs.
-      </p>
-    </section>
-  </main>
+<main>
+<section class="card">
+  <h2 class="page-name">Latest thoughts from The Hive Mind (Reddit)</h2>
+  <p class="muted">
+    Check out the latest posts from my favorite conspiritorial subreddits.<br>
+    <strong>Heads up:</strong> Loading posts will contact Reddit directly.
+  </p>
 
-  <footer>
+  <button id="loadReddit"
+      style="
+        margin-top:0.75rem;
+        padding:0.5rem 1rem;
+        border-radius:0.75rem;
+        border:1px solid rgba(148,163,184,0.8);
+        background:rgba(20,20,25,0.9);
+        color:#e5e7eb;
+        cursor:pointer;
+        font-size:0.9rem;
+      ">
+    Begin the mind meld
+  </button>
+
+  <div id="redditStatus" class="muted" style="margin-top:0.5rem;font-size:0.85rem;"></div>
+
+  <div id="redditFeed" style="margin-top:1rem; display:grid; gap:0.75rem;"></div>
+
+  <button id="redditMoreBtn" style="
+      margin-top:0.75rem;
+      padding:0.4rem 0.9rem;
+      border-radius:0.75rem;
+      border:1px solid rgba(74,222,128,0.8);
+      background:rgba(5,30,5,0.9);
+      color:#bbf7d0;
+      cursor:pointer;
+      font-size:0.85rem;
+      display:none;
+    ">
+    Show more anomalies
+  </button>
+</section>
+</main>
+
+<footer>
     © <span id="year"></span> Bienvenido — Under construction, eternally.
-  </footer>
+</footer>
 
-  <script>
+<script>
     document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+</script>
+
+<script>
+// Subreddits
+const subreddits = [
+  'aliens',
+  'conspiracy',
+  'HighStrangeness',
+  'glitchinthematrix',
+  'highstrangeness',
+  'ufo',
+  'UFOs',
+  'UAP'
+];
+
+const postsPerSub = 20;
+const POSTS_PAGE_SIZE = 42;
+
+let allPostsGlobal = [];
+let postsShown = 0;
+
+const feedEl = document.getElementById('redditFeed');
+const statusEl = document.getElementById('redditStatus');
+const loadBtn = document.getElementById('loadReddit');
+const moreBtn = document.getElementById('redditMoreBtn');
+
+// Fetch from reddit
+async function fetchSubreddit(sub) {
+  const url = `https://www.reddit.com/r/${sub}/top.json?t=month&limit=${postsPerSub}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed: r/${sub}`);
+  const data = await res.json();
+  return data.data.children
+      .filter(p => !p.data.stickied)
+      .map(p => p.data);
+}
+
+function renderMorePosts(initial = false) {
+  if (!allPostsGlobal.length) return;
+
+  if (initial) {
+    feedEl.innerHTML = '';
+    postsShown = 0;
+  }
+
+  const start = postsShown;
+  const end = Math.min(postsShown + POSTS_PAGE_SIZE, allPostsGlobal.length);
+  const slice = allPostsGlobal.slice(start, end);
+
+  slice.forEach(post => {
+    const card = document.createElement('article');
+    card.className = 'con-card';
+
+    const titleLink = document.createElement('a');
+    titleLink.href = `https://www.reddit.com${post.permalink}`;
+    titleLink.target = '_blank';
+    titleLink.rel = 'noopener noreferrer';
+    titleLink.textContent = post.title;
+    titleLink.className = 'con-title';
+
+    const meta = document.createElement('div');
+    meta.className = 'con-meta';
+    meta.textContent = `r/${post.subreddit} • ${post.score} points • ${post.num_comments} comments`;
+
+    card.appendChild(titleLink);
+    card.appendChild(meta);
+    feedEl.appendChild(card);
+  });
+
+  postsShown = end;
+
+  if (postsShown < allPostsGlobal.length) {
+    moreBtn.style.display = 'inline-block';
+  } else {
+    moreBtn.style.display = 'none';
+  }
+}
+
+async function loadRedditPosts() {
+  statusEl.textContent = 'Tuning the antennas…';
+  feedEl.innerHTML = '';
+  moreBtn.style.display = 'none';
+  loadBtn.disabled = true;
+
+  try {
+    const results = await Promise.all(
+      subreddits.map(sub =>
+        fetchSubreddit(sub).catch(err => {
+          console.warn('Error loading', sub, err);
+          return [];
+        })
+      )
+    );
+
+    const merged = results.flat();
+
+    const seen = new Set();
+    allPostsGlobal = merged.filter(post => {
+      if (!post.permalink) return false;
+      if (seen.has(post.permalink)) return false;
+      seen.add(post.permalink);
+      return true;
+    });
+
+    allPostsGlobal.sort((a, b) => b.score - a.score);
+
+    const HARD_CAP = 200;
+    if (allPostsGlobal.length > HARD_CAP) {
+      allPostsGlobal = allPostsGlobal.slice(0, HARD_CAP);
+    }
+
+    statusEl.textContent =
+      `Pulled ${allPostsGlobal.length} posts from ` +
+      subreddits.map(s => 'r/' + s).join(', ') +
+      ' — showing up to ' + POSTS_PAGE_SIZE + ' at a time.';
+
+    renderMorePosts(true);
+
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = 'Could not contact Reddit. The signals are jammed.';
+  } finally {
+    loadBtn.disabled = false;
+  }
+}
+
+loadBtn.addEventListener('click', loadRedditPosts);
+moreBtn.addEventListener('click', () => renderMorePosts(false));
+</script>
 
 </body>
 </html>

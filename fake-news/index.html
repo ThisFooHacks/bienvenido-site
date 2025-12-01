@@ -11,7 +11,7 @@
 
         @font-face {
             font-family: 'Chomsky';
-  src: url('../fonts/Chomsky.woff2') format('woff2');
+            src: url('../fonts/Chomsky.woff2') format('woff2');
             font-weight: normal;
             font-style: normal;
         }
@@ -29,6 +29,7 @@
             font-weight: 700;
             font-style: normal;
         }
+
         :root {
             --overlay: rgba(0, 0, 0, 0.25);
             --card-bg: rgba(15, 23, 42, 0.35);
@@ -50,22 +51,22 @@
             cursor: url("../sprites/Ojitos.png") 16 16, auto; /* custom eyes cursor */
         }
 
-            /* Background image */
-            body::before {
-                content: "";
-                position: fixed;
-                inset: 0;
-                background: url("../backgrounds/BroGarf.png") center center / cover no-repeat fixed;
-                z-index: -2;
-            }
+        /* Background image */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url("../backgrounds/BroGarf.png") center center / cover no-repeat fixed;
+            z-index: -2;
+        }
 
-            body::after {
-                content: "";
-                position: fixed;
-                inset: 0;
-                background: var(--overlay);
-                z-index: -1;
-            }
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: var(--overlay);
+            z-index: -1;
+        }
 
         /* Header */
         header {
@@ -115,9 +116,9 @@
             text-decoration: none;
         }
 
-            .back-link:hover {
-                text-decoration: underline;
-            }
+        .back-link:hover {
+            text-decoration: underline;
+        }
 
         /* Cryptid navigation bar (same vibe as home) */
         .nav-menu {
@@ -142,6 +143,7 @@
             text-align: center;
             color: var(--text);
             font-size: 0.8rem;
+            text-decoration: none;
         }
 
         .menu-label {
@@ -209,7 +211,7 @@
             top: 32px;
             left: 50%;
             width: 40px;
-            height: 80px;
+            height: 80%;
             transform: translateX(-50%);
             background: radial-gradient(circle at top, rgba(248,250,252,0.9) 0, rgba(224,242,254,0.7) 20%, rgba(96,165,250,0.25) 50%, transparent 75%);
             clip-path: polygon(50% 0, 0 100%, 100% 100%);
@@ -252,7 +254,7 @@
             position: relative;
         }
 
-        /* TV screen overlay for feed */
+        /* TV wrapper */
         .tv-wrapper {
             position: relative;
             width: 100%;
@@ -261,10 +263,10 @@
             margin: 0 auto;
         }
 
+        /* TV 'screen' area where content sits */
         .tv-screen {
             position: absolute;
-            /* These values are tuned for the provided image (1152x768).
-         Adjust top/left/width/height if needed after you eyeball it in the browser. */
+            /* tuned for ~1152x768 BroGarf; adjust if needed */
             top: 19%;
             left: 18%;
             width: 36%;
@@ -273,78 +275,105 @@
             border-radius: 10px;
             box-shadow: inset 0 0 18px rgba(0,0,0,0.9);
             padding: 0.5rem 0.7rem;
-            overflow-y: auto;
+            overflow: hidden; /* inner content manages its own scrolling */
             color: #e5e7eb;
             font-size: 0.78rem;
             line-height: 1.4;
-            scrollbar-width: thin;
-            scrollbar-color: #22c55e #020617;
         }
 
-            .tv-screen::-webkit-scrollbar {
-                width: 6px;
-            }
+        /* Democracy Now! block inside TV */
+        #dn-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 0.1rem 0;
+            color: #e5e7eb;
+            font-size: 0.9rem;
+        }
 
-            .tv-screen::-webkit-scrollbar-track {
-                background: #020617;
-            }
-
-            .tv-screen::-webkit-scrollbar-thumb {
-                background-color: #22c55e;
-                border-radius: 999px;
-            }
-
-        .feed-header {
-            font-family: "Chomsky", serif;
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
+        .dn-title {
+            margin: 0 0 0.1rem;
+            font-family: 'Chomsky', serif;
+            font-size: 0.9rem;
             text-align: center;
-            letter-spacing: 0.05em;
         }
 
-        .feed-meta {
-            text-align: center;
+        .dn-note {
+            margin: 0 0 0.3rem;
             font-size: 0.7rem;
-            color: var(--muted);
-            margin-bottom: 0.4rem;
-        }
-
-        .feed-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .feed-item + .feed-item {
-            margin-top: 0.4rem;
-            padding-top: 0.35rem;
-            border-top: 1px dashed rgba(148,163,184,0.4);
-        }
-
-        .feed-title {
-            font-weight: 600;
-            margin: 0;
-        }
-
-            .feed-title a {
-                color: #e5e7eb;
-                text-decoration: none;
-            }
-
-                .feed-title a:hover,
-                .feed-title a:focus-visible {
-                    text-decoration: underline;
-                }
-
-        .feed-source {
-            font-size: 0.7rem;
-            color: var(--muted);
-        }
-
-        .feed-summary {
-            margin: 0.1rem 0 0;
-            font-size: 0.74rem;
             color: #cbd5e1;
+            text-align: center;
+        }
+
+        .dn-video-shell {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: radial-gradient(circle at center, #111827, #020617);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow:
+                0 0 10px rgba(15,23,42,0.8),
+                0 0 20px rgba(0,0,0,0.8);
+            margin-bottom: 0.3rem;
+        }
+
+        .dn-episodes-list {
+            flex: 1;
+            overflow-y: auto;
+            margin-top: 0.15rem;
+            padding-right: 0.25rem;
+        }
+
+        .dn-episode {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.3rem 0.4rem;
+            border-radius: 0.4rem;
+            background: rgba(15,23,42,0.75);
+            border: 1px solid rgba(148,163,184,0.45);
+            margin-bottom: 0.25rem;
+            cursor: pointer;
+            transition: background 0.15s ease-out, transform 0.1s ease-out, box-shadow 0.15s ease-out;
+        }
+
+        .dn-episode:hover {
+            background: rgba(30,64,175,0.85);
+            transform: translateY(-1px);
+            box-shadow: 0 0 10px rgba(37,99,235,0.7);
+        }
+
+        .dn-thumb {
+            width: 60px;
+            height: 34px;
+            border-radius: 0.25rem;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .dn-ep-main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .dn-ep-title {
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin: 0 0 0.05rem;
+            color: #e5e7eb;
+        }
+
+        .dn-ep-meta {
+            font-size: 0.7rem;
+            color: #9ca3af;
+        }
+
+        .dn-status {
+            margin-top: 0.15rem;
+            font-size: 0.65rem;
+            color: #9ca3af;
+            text-align: center;
         }
 
         footer {
@@ -370,154 +399,237 @@
                 width: 40%;
                 height: 52%;
             }
+
+            .dn-title {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <div class="top-bar">
-            <a href="../index.html" class="back-link">← Back to Bienvenido</a>
+<header>
+    <div class="top-bar">
+        <a href="../index.html" class="back-link">← Back to Bienvenido</a>
 
-            <div class="banner">
-                <h1>What is up Foo!?</h1>
-                <div class="subtitle">Fake News Network · Broadcast live from your brain worms.</div>
-            </div>
-
-            <!-- Nav bar with cryptid sprites -->
-            <nav class="nav-menu" aria-label="Main menu">
-
-  <a class="menu-item" href="/Talk2Me/">
-    <div class="ufo"></div>
-    <div class="beam"></div>
-    <div class="sprite sprite-alien"></div>
-    <span class="menu-label">Make Contact</span>
-  </a>
-
-  <a class="menu-item" href="/Conspiracies/">
-    <div class="ufo"></div>
-    <div class="beam"></div>
-    <div class="sprite sprite-bigfoot"></div>
-    <span class="menu-label">Conspiracies</span>
-  </a>
-
-  <a class="menu-item" href="/fake-news/">
-    <div class="ufo"></div>
-    <div class="beam"></div>
-    <div class="sprite sprite-mothman"></div>
-    <span class="menu-label">News</span>
-  </a>
-
-  <a class="menu-item" href="/Revistas/">
-    <div class="ufo"></div>
-    <div class="beam"></div>
-    <div class="sprite sprite-chupacabra"></div>
-    <span class="menu-label">ChupaYCome</span>
-  </a>
-
-  <a class="menu-item" href="/hells-kitchen/">
-    <div class="ufo"></div>
-    <div class="beam"></div>
-    <div class="sprite sprite-devil"></div>
-    <span class="menu-label">Hell's Kitchen</span>
-  </a>
-
-  <a class="menu-item" href="/blog/">
-    <div class="ufo"></div>
-    <div class="beam"></div>
-    <div class="sprite sprite-cthulu"></div>
-    <span class="menu-label">Literary Nightmares</span>
-  </a>
-
-</nav>
-
+        <div class="banner">
+            <h1>What is up Foo!?</h1>
+            <div class="subtitle">Fake News Network · Broadcast live from your brain worms.</div>
         </div>
-    </header>
 
-    <main>
-        <div class="tv-wrapper">
-            <!-- This sits over the TV's empty space -->
-            <div class="tv-screen" id="tvFeed">
-                <div class="feed-header">Fake News Ticker</div>
-                <div class="feed-meta" id="feedMeta">Loading headlines…</div>
-                <ul class="feed-list" id="feedList">
-                    <!-- JS will populate items here -->
-                </ul>
+        <!-- Nav bar with cryptid sprites -->
+        <nav class="nav-menu" aria-label="Main menu">
+
+            <a class="menu-item" href="/Talk2Me/">
+                <div class="ufo"></div>
+                <div class="beam"></div>
+                <div class="sprite sprite-alien"></div>
+                <span class="menu-label">Make Contact</span>
+            </a>
+
+            <a class="menu-item" href="/Conspiracies/">
+                <div class="ufo"></div>
+                <div class="beam"></div>
+                <div class="sprite sprite-bigfoot"></div>
+                <span class="menu-label">Conspiracies</span>
+            </a>
+
+            <a class="menu-item" href="/fake-news/">
+                <div class="ufo"></div>
+                <div class="beam"></div>
+                <div class="sprite sprite-mothman"></div>
+                <span class="menu-label">News</span>
+            </a>
+
+            <a class="menu-item" href="/Revistas/">
+                <div class="ufo"></div>
+                <div class="beam"></div>
+                <div class="sprite sprite-chupacabra"></div>
+                <span class="menu-label">ChupaYCome</span>
+            </a>
+
+            <a class="menu-item" href="/hells-kitchen/">
+                <div class="ufo"></div>
+                <div class="beam"></div>
+                <div class="sprite sprite-devil"></div>
+                <span class="menu-label">Hell's Kitchen</span>
+            </a>
+
+            <a class="menu-item" href="/blog/">
+                <div class="ufo"></div>
+                <div class="beam"></div>
+                <div class="sprite sprite-cthulu"></div>
+                <span class="menu-label">Literary Nightmares</span>
+            </a>
+
+        </nav>
+
+    </div>
+</header>
+
+<main>
+    <div class="tv-wrapper">
+        <!-- This sits over the TV's empty space -->
+        <div class="tv-screen" id="tvFeed">
+            <div id="dn-wrapper">
+                <h2 class="dn-title">Democracy Now! — Video Feed</h2>
+                <p class="dn-note">
+                    Latest full shows from Democracy Now!<br>
+                    <strong>Note:</strong> Loading & playing videos will contact democracynow.org and their media host.
+                </p>
+
+                <!-- Video player in the TV -->
+                <div class="dn-video-shell">
+                    <video id="dnVideo" controls preload="metadata" poster="" style="width:100%; height:100%;">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- Scrollable list of recent episodes -->
+                <div id="dnEpisodes" class="dn-episodes-list">
+                    <!-- Episodes will be injected here -->
+                </div>
+
+                <div id="dnStatus" class="dn-status"></div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer>
-        © <span id="year"></span> Fake News Network — All opinions are hallucinations.
-    </footer>
+<footer>
+    © <span id="year"></span> Fake News Network — All opinions are hallucinations.
+</footer>
 
-    <script>
+<script>
     document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 
-    // --- SIMPLE PLACEHOLDER FEED DATA ---
-    // For now this uses local static items so it works on GitHub Pages with no backend.
-    // Later we can wire this up to a privacy-respecting RSS->JSON proxy you control.
-    const sampleItems = [
-      {
-        source: "Totally Real News",
-        title: "Local Cat Declares 4AM As International Zoomies Hour",
-        link: "#",
-        summary: "Experts warn productivity may never recover.",
-        time: "Just now"
-      },
-      {
-        source: "Void Gazette",
-        title: "Scientists Confirm: Reading Comments Lowers IQ By 12 Points",
-        link: "#",
-        summary: "Officials recommend touching grass at least twice daily.",
-        time: "10 min ago"
-      },
-      {
-        source: "Orbital Onion",
-        title: "Area Man Starts Personal Website, Immediately More Interesting Than The News",
-        link: "#",
-        summary: "Analysts say vibes expected to rise 300% over Q4.",
-        time: "Today"
+<script>
+  const DN_FEED_URL = 'https://www.democracynow.org/podcast-video.xml';
+  const DN_MAX_EPISODES = 8; // how many to show in the list
+
+  const dnVideoEl = document.getElementById('dnVideo');
+  const dnEpisodesEl = document.getElementById('dnEpisodes');
+  const dnStatusEl = document.getElementById('dnStatus');
+
+  async function loadDemocracyNowFeed() {
+    try {
+      dnStatusEl.textContent = 'Fetching Democracy Now! episodes…';
+
+      const res = await fetch(DN_FEED_URL);
+      if (!res.ok) {
+        throw new Error('Network response was not OK');
       }
-    ];
 
-    function renderFeed(items) {
-      const list = document.getElementById("feedList");
-      const meta = document.getElementById("feedMeta");
+      const xmlText = await res.text();
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
 
-      list.innerHTML = "";
-      if (!items.length) {
-        meta.textContent = "No headlines available. The Ministry of Truth is probably busy.";
+      const itemNodes = Array.from(xmlDoc.querySelectorAll('channel > item'));
+      if (!itemNodes.length) {
+        dnStatusEl.textContent = 'No episodes found in the feed.';
         return;
       }
 
-      meta.textContent = `Showing ${items.length} handcrafted headlines`;
+      const episodes = itemNodes.slice(0, DN_MAX_EPISODES).map(item => {
+        const titleNode = item.querySelector('title');
+        const dateNode = item.querySelector('pubDate');
+        const enclosure = item.querySelector('enclosure[url]');
 
-      for (const item of items) {
-        const li = document.createElement("li");
-        li.className = "feed-item";
-        li.innerHTML = `
-          <p class="feed-title">
-            ${item.link && item.link !== "#"
-              ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a>`
-              : item.title}
-          </p>
-          <div class="feed-source">${item.source} · <span>${item.time}</span></div>
-          ${item.summary ? `<p class="feed-summary">${item.summary}</p>` : ""}
-        `;
-        list.appendChild(li);
+        // Try to get a thumbnail if present (media:thumbnail)
+        let thumbUrl = '';
+        const thumbNode = item.querySelector('media\\:thumbnail, thumbnail');
+        if (thumbNode && thumbNode.getAttribute('url')) {
+          thumbUrl = thumbNode.getAttribute('url');
+        }
+
+        return {
+          title: titleNode ? titleNode.textContent.trim() : 'Untitled episode',
+          pubDate: dateNode ? dateNode.textContent.trim() : '',
+          videoUrl: enclosure ? enclosure.getAttribute('url') : '',
+          thumbUrl
+        };
+      }).filter(ep => ep.videoUrl);
+
+      if (!episodes.length) {
+        dnStatusEl.textContent = 'No playable video episodes found.';
+        return;
       }
+
+      // Set initial video to the first episode
+      setDemocracyNowVideo(episodes[0]);
+      renderDemocracyNowList(episodes);
+      dnStatusEl.textContent = `Loaded ${episodes.length} Democracy Now! video episodes.`;
+    } catch (err) {
+      console.error('Error loading Democracy Now feed:', err);
+      dnStatusEl.textContent =
+        'Could not load Democracy Now! feed. (Possibly blocked by CORS or network issues.)';
     }
+  }
 
-    renderFeed(sampleItems);
+  function setDemocracyNowVideo(episode) {
+    if (!episode.videoUrl) return;
+    dnVideoEl.src = episode.videoUrl;
 
-    // NOTE: When you're ready for real RSS:
-    // - We'll set up a tiny proxy (on a serverless function or tiny VPS)
-    //   that fetches RSS → returns minimal JSON.
-    // - Then swap renderFeed(sampleItems) with a fetch() to your proxy.
-    // This avoids sketchy public RSS-to-JSON services and keeps things privacy-friendly.
-    </script>
+    if (episode.thumbUrl) {
+      dnVideoEl.setAttribute('poster', episode.thumbUrl);
+    } else {
+      dnVideoEl.removeAttribute('poster');
+    }
+  }
+
+  function renderDemocracyNowList(episodes) {
+    dnEpisodesEl.innerHTML = '';
+
+    episodes.forEach(ep => {
+      const row = document.createElement('div');
+      row.className = 'dn-episode';
+
+      if (ep.thumbUrl) {
+        const img = document.createElement('img');
+        img.src = ep.thumbUrl;
+        img.alt = ep.title;
+        img.className = 'dn-thumb';
+        row.appendChild(img);
+      }
+
+      const main = document.createElement('div');
+      main.className = 'dn-ep-main';
+
+      const titleEl = document.createElement('div');
+      titleEl.className = 'dn-ep-title';
+      titleEl.textContent = ep.title;
+
+      const metaEl = document.createElement('div');
+      metaEl.className = 'dn-ep-meta';
+      metaEl.textContent = formatDemocracyNowDate(ep.pubDate);
+
+      main.appendChild(titleEl);
+      main.appendChild(metaEl);
+      row.appendChild(main);
+
+      row.addEventListener('click', () => {
+        setDemocracyNowVideo(ep);
+        dnVideoEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+
+      dnEpisodesEl.appendChild(row);
+    });
+  }
+
+  function formatDemocracyNowDate(pubDateStr) {
+    if (!pubDateStr) return '';
+    const d = new Date(pubDateStr);
+    if (isNaN(d.getTime())) return pubDateStr;
+
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return d.toLocaleDateString(undefined, options);
+  }
+
+  // Kick it off
+  loadDemocracyNowFeed();
+</script>
 
 </body>
 </html>
