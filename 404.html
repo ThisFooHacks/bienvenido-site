@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Lost in the Void — 404</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- Self-hosted Chomsky font -->
+    <style>
+    @font-face {
+        font-family: 'Chomsky';
+        src: url('/fonts/Chomsky.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    :root {
+        --overlay: rgba(0, 0, 0, 0.55);
+        --card-bg: rgba(15, 23, 42, 0.88);
+        --card-border: rgba(255,255,255,0.25);
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --accent: #22c55e;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        text-align: center;
+    }
+
+    /* Background */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: url("/backgrounds/404.png") center center / cover no-repeat;
+        z-index: -2;
+    }
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: var(--overlay);
+        z-index: -1;
+    }
+
+    h1 {
+        font-family: 'Chomsky', serif;
+        font-size: clamp(2.4rem, 6vw, 4rem);
+        margin: 0;
+        color: white;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    .card {
+        padding: 1.75rem 2rem;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 1rem;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+        backdrop-filter: blur(10px);
+        max-width: 600px;
+        margin: 1rem;
+    }
+
+    .message {
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1.25rem;
+        color: var(--muted);
+        line-height: 1.6;
+    }
+
+    .ufo {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto 1rem;
+        background-image: url("/sprites/UFO.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        animation: ufo-float 2.2s ease-in-out infinite alternate;
+        filter: drop-shadow(0 6px 14px rgba(0,0,0,0.8));
+    }
+
+    @keyframes ufo-float {
+        0% { transform: translateY(-4px) scale(1); }
+        100% { transform: translateY(-14px) scale(1.06); }
+    }
+
+    a.return-home {
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.75rem;
+        background: rgba(15,23,42,0.85);
+        border: 1px solid var(--card-border);
+        font-weight: 600;
+        transition: background 0.2s ease-out, transform 0.15s ease-out;
+        display: inline-block;
+    }
+
+    a.return-home:hover {
+        background: rgba(30,41,59,0.95);
+        transform: scale(1.04);
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            margin-top: 2rem;
+            padding: 1.5rem;
+        }
+        h1 {
+            font-size: 2.1rem;
+        }
+    }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="ufo"></div>
+
+        <h1>404 — Lost in the Void</h1>
+
+        <p class="message">
+            Garfield tried to abduct this page,<br>
+            but it doesn’t exist in this timeline.
+        </p>
+
+        <a class="return-home" href="/">Beam Me Back Home</a>
+    </div>
+
+</body>
+</html>
